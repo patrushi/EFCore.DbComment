@@ -11,10 +11,10 @@ public class User
 }
 ```
 
-In DbContect.OnModelCreating insert
+In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
 var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model);
-EFCore.DbComment.PgComment.AddCommentsToModel(commentModel);
+EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
 ```
 
 And then you can do ```dotnet ef migrations add ...```
@@ -32,8 +32,8 @@ public class User
 }
 ```
 
-In DbContect.OnModelCreating insert
+In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
 var commentModel = EFCore.DbComment.CommentModel.CreateFromDescriptionAttr(builder.Model);
-EFCore.DbComment.PgComment.AddCommentsToModel(commentModel);
+EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
 ```

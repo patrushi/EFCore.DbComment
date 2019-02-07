@@ -13,7 +13,7 @@ public class User
 
 In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
-var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model);
+var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model, typeof(DbContext).Assembly);
 EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
 ```
 

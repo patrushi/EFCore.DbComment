@@ -83,12 +83,21 @@ namespace EFCore.DbComment
         /// Create model with comment from XmlDoc (summary tag)
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="filePath"></param>
+        /// <param name="xmlAssembly"></param>
         /// <returns></returns>
-        public static CommentModel CreateFromXmlDocFile(IModel model, string filePath = null)
+        public static CommentModel CreateFromXmlDocFile(IModel model, Assembly xmlAssembly)
         {
-            var xmlDocFile = filePath ?? Path.Combine(AppContext.BaseDirectory, $"{typeof(CommentModel).Assembly.GetName().Name}.xml");
+            return CreateFromXmlDocFile(model, $"{xmlAssembly.GetName().Name}.xml");
+        }
 
+        /// <summary>
+        /// Create model with comment from XmlDoc (summary tag)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="xmlDocFile"></param>
+        /// <returns></returns>
+        public static CommentModel CreateFromXmlDocFile(IModel model, string xmlDocFile)
+        {
             var resultModel = CreateFromModel(model);
             
             var xdoc = XDocument.Load(xmlDocFile);

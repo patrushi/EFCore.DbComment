@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>EFCore.DbComment</RootNamespace>
     <PackageId>EFCore.DbComment</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>ptrushin</Authors>
     <Company>patrushi</Company>
     <PackageDescription>https://github.com/patrushi/EFCore.DbComment</PackageDescription>

@@ -87,7 +87,7 @@ namespace EFCore.DbComment
         /// <returns></returns>
         public static CommentModel CreateFromXmlDocFile(IModel model, Assembly xmlAssembly)
         {
-            return CreateFromXmlDocFile(model, $"{xmlAssembly.GetName().Name}.xml");
+            return CreateFromXmlDocFile(model, Path.Combine(AppContext.BaseDirectory, $"{xmlAssembly.GetName().Name}.xml"));
         }
 
         /// <summary>

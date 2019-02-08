@@ -1,6 +1,6 @@
-# EFCore.DbComment
+EFCore.DbComment
 
-## Using for postgres and XmlDoc
+# Using for postgres and XmlDoc
 
 ```
 /// <summary>User</summary>
@@ -13,7 +13,7 @@ public class User
 
 In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
-var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model, typeof(DbContext).Assembly);
+var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model, this.GetType().Assembly);
 EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
 ```
 
@@ -21,7 +21,7 @@ And then you can do ```dotnet ef migrations add ...```
 
 Don't forget to enable XML documentation
 
-## Using for postgres and [Description] attr
+# Using for postgres and [Description] attr
 
 ```
 [Description("User")]
@@ -37,3 +37,6 @@ In DbContext.OnModelCreating(ModelBuilder builder) insert
 var commentModel = EFCore.DbComment.CommentModel.CreateFromDescriptionAttr(builder.Model);
 EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
 ```
+
+# Links
+* Nuget - https://www.nuget.org/packages/EFCore.DbComment/

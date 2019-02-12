@@ -1,6 +1,7 @@
 EFCore.DbComment
 
 Add comment for objects (table, column) from code to database.
+You can use it with xml comment summary or Description clr attr.
 
 # Using for postgres and XmlDoc
 

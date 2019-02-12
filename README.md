@@ -1,5 +1,7 @@
 EFCore.DbComment
 
+Add comment for objects (table, column) from code to database.
+
 # Using for postgres and XmlDoc
 
 ```

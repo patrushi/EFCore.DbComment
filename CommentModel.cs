@@ -154,5 +154,34 @@ namespace EFCore.DbComment
                 ? null
                 : GetPropertyComment(commentDict, type.BaseType, property);
         }
+
+        /// <summary>
+        /// Get sql for create comments
+        /// </summary>
+        /// <returns></returns>
+        public static IList<string> GetCommentsForPaste(CommentModel commentModel)
+        {
+            var result = new List<string>();
+            
+            foreach (var entity in commentModel.EntityCommentList)
+            {
+                // comments on table
+                if (!string.IsNullOrEmpty(entity.Comment))
+                {
+                    result.Add($"COMMENT ON TABLE {entity.EntityType.Relational().TableName} IS '{entity.Comment}'");
+                }
+            
+                // comments on columns
+                foreach (var property in entity.EntityPropertyList)
+                {
+                    if (!string.IsNullOrEmpty(property.Comment))
+                    {
+                        result.Add($"COMMENT ON COLUMN {property.Property.DeclaringEntityType.Relational().TableName}.{property.Property.Relational().ColumnName} IS '{property.Comment}'");
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

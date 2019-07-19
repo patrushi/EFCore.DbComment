@@ -17,7 +17,25 @@ public class User
 In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
 var commentModel = EFCore.DbComment.CommentModel.CreateFromXmlDocFile(builder.Model, this.GetType().Assembly);
-EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
+AddCommentsToModel(builder, commentModel);
+
+/// <summary>Add comments to EFCore model</summary>
+public static void AddCommentsToModel(ModelBuilder modelBuilder, CommentModel commentModel)
+{
+    foreach (var entity in commentModel.EntityCommentList)
+    {
+        // comments on table
+        var entityTypeBuilder = modelBuilder.Entity(entity.EntityType.ClrType);
+        if (!string.IsNullOrEmpty(entity.Comment)) entityTypeBuilder.ForNpgsqlHasComment(entity.Comment);
+    
+        // comments on columns
+        foreach (var property in entity.EntityPropertyList)
+        {
+            var propertyTypeBuilder = entityTypeBuilder.Property(property.Property.Name);
+            if (!string.IsNullOrEmpty(property.Comment)) propertyTypeBuilder.ForNpgsqlHasComment(property.Comment);
+        }
+    }
+}
 ```
 
 And then you can do ```dotnet ef migrations add ...```
@@ -38,7 +56,7 @@ public class User
 In DbContext.OnModelCreating(ModelBuilder builder) insert
 ```
 var commentModel = EFCore.DbComment.CommentModel.CreateFromDescriptionAttr(builder.Model);
-EFCore.DbComment.PgComment.AddCommentsToModel(builder, commentModel);
+AddCommentsToModel(builder, commentModel);
 ```
 
 # Links

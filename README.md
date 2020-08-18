@@ -26,13 +26,13 @@ public static void AddCommentsToModel(ModelBuilder modelBuilder, CommentModel co
     {
         // comments on table
         var entityTypeBuilder = modelBuilder.Entity(entity.EntityType.ClrType);
-        if (!string.IsNullOrEmpty(entity.Comment)) entityTypeBuilder.ForNpgsqlHasComment(entity.Comment);
+        if (!string.IsNullOrEmpty(entity.Comment)) entityTypeBuilder.HasComment(entity.Comment);
     
         // comments on columns
         foreach (var property in entity.EntityPropertyList)
         {
             var propertyTypeBuilder = entityTypeBuilder.Property(property.Property.Name);
-            if (!string.IsNullOrEmpty(property.Comment)) propertyTypeBuilder.ForNpgsqlHasComment(property.Comment);
+            if (!string.IsNullOrEmpty(property.Comment)) propertyTypeBuilder.HasComment(property.Comment);
         }
     }
 }

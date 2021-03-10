@@ -110,7 +110,6 @@ namespace EFCore.DbComment
 
                 foreach (var property in entity.EntityPropertyList)
                 {
-                    if (property.Property.IsShadowProperty()) continue;
                     property.Comment = GetPropertyComment(commentDict, entity.EntityType.ClrType, property.Property);
                 }
             }
@@ -133,6 +132,7 @@ namespace EFCore.DbComment
 
                 foreach (var property in entity.EntityPropertyList)
                 {
+                    if (property.Property.IsShadowProperty()) continue;
                     property.Comment = ((DescriptionAttribute)property.Property.PropertyInfo.GetCustomAttribute(typeof(DescriptionAttribute)))?.Description;
                 }
             }

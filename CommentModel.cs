@@ -101,7 +101,7 @@ namespace EFCore.DbComment
             var resultModel = CreateFromModel(model);
             
             var xdoc = XDocument.Load(xmlDocFile);
-            var commentDict = xdoc.Element("doc").Element("members").Elements("member")
+            var commentDict = xdoc.Element("doc")!.Element("members")!.Elements("member")
                 .ToDictionary(e => e.Attribute("name")?.Value, e => e.Element("summary")?.Value?.Trim());
             
             foreach (var entity in resultModel.EntityCommentList)
@@ -168,7 +168,7 @@ namespace EFCore.DbComment
                 // comments on table
                 if (!string.IsNullOrEmpty(entity.Comment))
                 {
-                    result.Add($"COMMENT ON TABLE {entity.EntityType.Relational().TableName} IS '{entity.Comment}'");
+                    result.Add($"COMMENT ON TABLE {entity.EntityType.GetTableName()} IS '{entity.Comment}'");
                 }
             
                 // comments on columns
@@ -176,7 +176,9 @@ namespace EFCore.DbComment
                 {
                     if (!string.IsNullOrEmpty(property.Comment))
                     {
-                        result.Add($"COMMENT ON COLUMN {property.Property.DeclaringEntityType.Relational().TableName}.{property.Property.Relational().ColumnName} IS '{property.Comment}'");
+                        var schema = property.Property.DeclaringEntityType.GetSchema();
+                        var tableName = property.Property.DeclaringEntityType.GetTableName();
+                        result.Add($"COMMENT ON COLUMN {tableName}.{property.Property.GetColumnName(StoreObjectIdentifier.Table(tableName, schema))} IS '{property.Comment}'");
                     }
                 }
             }
